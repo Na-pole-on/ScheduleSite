@@ -15,6 +15,6 @@ namespace DatabaseAccessLayer.Entities.Parties
         public string? UserName { get; set; }
 
         public Party? Party { get; set; }
-        public string? Name { get; set; }
+        public string? PartyIdentifier { get; set; }
     }
 }
