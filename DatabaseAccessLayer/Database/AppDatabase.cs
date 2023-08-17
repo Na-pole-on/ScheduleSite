@@ -26,7 +26,7 @@ namespace DatabaseAccessLayer.Database
 
         public AppDatabase(DbContextOptions<AppDatabase> options) : base(options)
         {
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
 
             if (this.Roles.Count() == 0)
