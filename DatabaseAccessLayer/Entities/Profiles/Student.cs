@@ -14,6 +14,6 @@ namespace DatabaseAccessLayer.Entities.Profiles
         public Party? Party { get; set; }
         public string? PartyIdentifier { get; set; }
 
-        public IEnumerable<Party>? Parties { get; set; }
+        public IEnumerable<StudentParties>? Parties { get; set; }
     }
 }
