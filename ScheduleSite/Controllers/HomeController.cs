@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DatabaseAccessLayer.Database;
+using Microsoft.AspNetCore.Mvc;
 using ScheduleSite.Models;
 using System.Diagnostics;
 
@@ -7,10 +8,11 @@ namespace ScheduleSite.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        AppDatabase db;
+        public HomeController(ILogger<HomeController> logger, AppDatabase db)
         {
             _logger = logger;
+            this.db = db;
         }
 
         public IActionResult Index()
