@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScheduleSite", "ScheduleSite\ScheduleSite.csproj", "{453C4C9D-C6BB-4688-80E1-73193B7DFFFE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseAccessLayer", "DatabaseAccessLayer\DatabaseAccessLayer.csproj", "{29968D94-41E5-4A87-BAA3-72D8804A7CB5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{453C4C9D-C6BB-4688-80E1-73193B7DFFFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{453C4C9D-C6BB-4688-80E1-73193B7DFFFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{453C4C9D-C6BB-4688-80E1-73193B7DFFFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29968D94-41E5-4A87-BAA3-72D8804A7CB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29968D94-41E5-4A87-BAA3-72D8804A7CB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29968D94-41E5-4A87-BAA3-72D8804A7CB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29968D94-41E5-4A87-BAA3-72D8804A7CB5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
