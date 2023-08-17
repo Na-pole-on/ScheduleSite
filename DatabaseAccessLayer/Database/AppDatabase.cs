@@ -13,16 +13,16 @@ namespace DatabaseAccessLayer.Database
 {
     public class AppDatabase: DbContext
     {
-        DbSet<Student> Students { get; set; } = null!;
-        DbSet<Teacher> Teachers { get; set; } = null!;
-        DbSet<Admin> Privileged { get; set; } = null!;
-        DbSet<Role> Roles { get; set; } = null!;
+        public DbSet<Student> Students { get; set; } = null!;
+        public DbSet<Teacher> Teachers { get; set; } = null!;
+        public DbSet<Admin> Privileged { get; set; } = null!;
+        public DbSet<Role> Roles { get; set; } = null!;
 
-        DbSet<Party> Parties { get; set; } = null!;
-        DbSet<StudentParties> StudentParties { get; set; } = null!;
+        public DbSet<Party> Parties { get; set; } = null!;
+        public DbSet<StudentParties> StudentParties { get; set; } = null!;
 
-        DbSet<Day> Days { get; set; } = null!;
-        DbSet<Event> Events { get; set; } = null!;
+        public DbSet<Day> Days { get; set; } = null!;
+        public DbSet<Event> Events { get; set; } = null!;
 
         public AppDatabase(DbContextOptions<AppDatabase> options) : base(options)
         {

@@ -7,8 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
-    <Folder Include="Implementation\" />
+    <Folder Include="Implementation\UnitOfWork\" />
+    <Folder Include="Implementation\SignIn\" />
+    <Folder Include="Implementation\Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
