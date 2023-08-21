@@ -19,7 +19,8 @@ namespace DatabaseAccessLayer.Implementation.SignIn
         private AppDatabase db;
         private IHttpContextAccessor accessor;
 
-        public SignInManager(AppDatabase db, IHttpContextAccessor accessor)
+        public SignInManager(AppDatabase db,
+            IHttpContextAccessor accessor)
         {
             this.db = db;
             this.accessor = accessor;
@@ -34,9 +35,11 @@ namespace DatabaseAccessLayer.Implementation.SignIn
             .FirstOrDefault(ul => ul.Any(u => u.Email == email))
             ?.FirstOrDefault(u => u.Email == email && u.PasswordHash == password);
 
-        public async Task SignIn(User entity) => await accessor.HttpContext.SignInAsync(GetClaimsPrincipal(entity));
+        public async Task SignIn(User entity) => await accessor.HttpContext
+            .SignInAsync(GetClaimsPrincipal(entity));
 
-        public async Task SignOut() => await accessor.HttpContext.SignOutAsync();
+        public async Task SignOut() => await accessor.HttpContext
+            .SignOutAsync();
 
         private ClaimsPrincipal GetClaimsPrincipal(User entity)
         {

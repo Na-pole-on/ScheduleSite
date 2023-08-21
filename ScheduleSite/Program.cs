@@ -1,10 +1,10 @@
-using DatabaseAccessLayer.Extensions;
+using BusinessLogicLayer.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDatabaseLayer(builder.Configuration,
+builder.Services.AddBLLayer(builder.Configuration,
     builder.Configuration.GetConnectionString("Default"));
 
 var app = builder.Build();

@@ -14,11 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DatabaseAccessLayer\DatabaseAccessLayer.csproj" />
+    <Folder Include="wwwroot\css\bootstrap\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\css\bootstrap\" />
+    <ProjectReference Include="..\BusinessLogicLayer\BusinessLogicLayer.csproj" />
   </ItemGroup>
 
 </Project>
