@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Dtos\Dates\" />
+    <Folder Include="Dtos\Parties\" />
+    <Folder Include="Dtos\Profiles\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>
