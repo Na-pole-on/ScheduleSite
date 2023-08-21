@@ -1,0 +1,81 @@
+.home {
+    margin: 1.5rem 0;
+}
+
+.normal-font {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.cal {
+    border: 0.1vw solid #E7E8EA;
+    font-family: Roboto Mono;
+}
+
+.calendar-event {
+    font-size: 0.75rem;
+    color: darkorange;
+}
+
+.cal-i {
+    border: none;
+    font-size: 2rem;
+    background: none;
+}
+
+.cal-header {
+    font-size: 1.75rem;
+    padding: 0.5rem 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+    align-items: center;
+}
+
+.cal-calendar {
+    border: none;
+    background: none;
+}
+
+.cal-weekdays,
+.cal-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    align-items: center;
+}
+
+.cal-btn {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0;
+    background: white;
+    border: 0.1vw solid #E7E8EA;
+    font-size: 1rem;
+}
+
+.cal-day-btn {
+    display: flex;
+    flex-shrink: 0;
+    align-items: start;
+    justify-content: start;
+    height: 4rem;
+    color: black;
+    background: none;
+    text-decoration: none;
+    font-size: 1rem;
+    border: 0.1vw solid #E7E8EA;
+}
+
+.homelogo {
+    height: 3rem;
+}
+
+.avatar {
+    height: 2.25rem;
+}
+
+.scroll-event {
+    max-height: 15rem;
+    white-space: nowrap;
+}

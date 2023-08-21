@@ -7,7 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\js\bootstrap\**" />
+    <Content Remove="wwwroot\js\bootstrap\**" />
+    <EmbeddedResource Remove="wwwroot\js\bootstrap\**" />
+    <None Remove="wwwroot\js\bootstrap\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DatabaseAccessLayer\DatabaseAccessLayer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="wwwroot\css\bootstrap\" />
   </ItemGroup>
 
 </Project>
