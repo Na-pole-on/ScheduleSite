@@ -1,4 +1,6 @@
 ﻿using DatabaseAccessLayer.Database;
+using DatabaseAccessLayer.Implementation.UnitOfWork;
+using DatabaseAccessLayer.Interfaces.UnitOfWork;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -13,7 +15,7 @@ namespace DatabaseAccessLayer.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddDatabaseLayer(this IServiceCollection services,
+        public static IServiceCollection AddDALayer(this IServiceCollection services,
             IConfiguration configuration,
             string connectionString)
         {
@@ -29,7 +31,7 @@ namespace DatabaseAccessLayer.Extensions
                 options.UseSqlServer(connectionString);
             });
 
-            //services.AddScoped<IUnitOfWork, EFUnitOfWork>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
         }

@@ -26,12 +26,12 @@ namespace DatabaseAccessLayer.Implementation.Factories
         public override async Task<Student?> GetByName(string name) => await db.Students
             .Include(s => s.Role)
             .Include(s => s.Party)
-            .FirstAsync(s => s.UserName == name);
+            .FirstAsync(s => s.NormalizedUserName == name);
 
         public override async Task<Student?> GetByEmail(string email) => await db.Students
             .Include(s => s.Role)
             .Include(s => s.Party)
-            .FirstAsync(s => s.Email == email);
+            .FirstAsync(s => s.NormalizedEmail == email);
 
         public override async Task Create(Student entity) => await db.Students
             .AddAsync(entity);
