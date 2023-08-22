@@ -1,13 +1,7 @@
-﻿using DatabaseAccessLayer.Converter;
-using DatabaseAccessLayer.Entities.Dates;
+﻿using DatabaseAccessLayer.Entities.Dates;
 using DatabaseAccessLayer.Entities.Parties;
 using DatabaseAccessLayer.Entities.Profiles;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DatabaseAccessLayer.Database
 {
@@ -58,7 +52,7 @@ namespace DatabaseAccessLayer.Database
                 NormalizedEmail = "juikomathew@gmail.com".ToUpper(),
                 PhoneNumber = "+375(29)393-17-60",
                 PhoneNumberConfirmed = true,
-                DateOfBirth = new DateOnly(2002, 5, 30),
+                DateOfBirth = new DateTime(2002, 5, 30),
                 Role = this.Roles.FirstOrDefault(r => r.Name == "Admin"),
                 LockoutEnabled = false
             };
@@ -123,17 +117,6 @@ namespace DatabaseAccessLayer.Database
                 .WithOne(h => h.Day)
                 .HasPrincipalKey(d => d.Date)
                 .HasForeignKey(h => h.Date);
-        }
-
-        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
-        {
-            configurationBuilder.Properties<DateOnly>()
-                .HaveConversion<DateOnlyConverter>()
-                .HaveColumnType("date");
-
-            configurationBuilder.Properties<TimeOnly>()
-                .HaveConversion<TimeOnlyConverter>()
-                .HaveColumnType("time");
         }
     }
 }

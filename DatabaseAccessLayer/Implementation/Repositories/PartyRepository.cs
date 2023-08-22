@@ -26,10 +26,10 @@ namespace DatabaseAccessLayer.Implementation.Repositories
             .Include(p => p.Days)
             .FirstOrDefaultAsync(p => p.Id == id);
 
-        public Task<Party?> GetByPartyId(string name) => db.Parties
+        public Task<Party?> GetByPartyId(string partyId) => db.Parties
             .Include(p => p.StudentParties)
             .Include(p => p.Days)
-            .FirstOrDefaultAsync(p => p.PartyIdentifier == name);
+            .FirstOrDefaultAsync(p => p.PartyIdentifier == partyId);
 
         public async Task Add(Student entity)
         {

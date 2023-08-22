@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Dtos.Dates
 {
-    internal class EventDTO
+    public class EventDTO
     {
+        public string? Id { get; set; }
+        public string? Name { get; set; }
+        public int Result { get; set; }
+        public DateTime Time { get; set; }
     }
 }

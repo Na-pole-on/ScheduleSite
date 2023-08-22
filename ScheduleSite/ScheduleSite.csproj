@@ -7,17 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\js\bootstrap\**" />
-    <Content Remove="wwwroot\js\bootstrap\**" />
-    <EmbeddedResource Remove="wwwroot\js\bootstrap\**" />
-    <None Remove="wwwroot\js\bootstrap\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\css\bootstrap\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\BusinessLogicLayer\BusinessLogicLayer.csproj" />
   </ItemGroup>
 

@@ -12,7 +12,7 @@ namespace DatabaseAccessLayer.Interfaces.Repositories
     {
         IEnumerable<Party> GetAll();
         Task<Party?> GetById(string id);
-        Task<Party?> GetByPartyId(string name);
+        Task<Party?> GetByPartyId(string partyId);
         Task Add(Student entity);
         Task Remove(Student entity);
         Task Create(Party entity);

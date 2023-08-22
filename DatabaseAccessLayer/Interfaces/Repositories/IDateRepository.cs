@@ -10,7 +10,7 @@ namespace DatabaseAccessLayer.Interfaces.Repositories
     public interface IDateRepository
     {
         IEnumerable<Day> GetMonth(DateTime date, string partyId);
-        //Task<Day> GetDayByDate(DateTime date);
-        //Task CreateEvent(Happening entity);
+        Task<Day?> GetDayByDate(DateTime date);
+        Task CreateEvent(Event entity);
     }
 }

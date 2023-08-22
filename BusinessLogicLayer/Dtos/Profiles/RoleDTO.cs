@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Dtos.Profiles
 {
-    internal class RoleDTO
+    public class RoleDTO
     {
+        public string? Id { get; set; }
+        public string? Name { get; set; }
+        public string? NormalizedName { get; set; }
+
+        public IEnumerable<UserDTO>? Users { get; set; }
     }
 }

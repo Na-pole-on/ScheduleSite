@@ -1,4 +1,5 @@
-﻿using BusinessLogicLayer.Dtos.Parties;
+﻿using BusinessLogicLayer.Cryptography;
+using BusinessLogicLayer.Dtos.Parties;
 using BusinessLogicLayer.Dtos.Profiles;
 using BusinessLogicLayer.Interfaces;
 using DatabaseAccessLayer.Entities.Profiles;
@@ -131,24 +132,23 @@ namespace BusinessLogicLayer.Services.UserServices
             return null;
         }
 
-        public async Task Create(Student entity)
+        public async Task Create(StudentDTO entity)
         {
             Student student = new Student
             {
-                Id = entity.Id,
                 DateOfBirth = entity.DateOfBirth,
                 Email = entity.Email,
                 UserName = entity.UserName,
-                LockoutEnabled = entity.LockoutEnabled,
-                NormalizedEmail = entity.NormalizedEmail,
-                NormalizedUserName = entity.NormalizedUserName,
-                PasswordHash = entity.PasswordHash,
+                NormalizedEmail = entity.Email.ToUpper(),
+                NormalizedUserName = entity.UserName.ToUpper(),
+                PasswordHash = Cipher.Encrypt(entity.PasswordHash),
                 PhoneNumber = entity.PhoneNumber,
-                PhoneNumberConfirmed = entity.PhoneNumberConfirmed,
-                Role = await _unitOfWork.Roles.GetByName(entity.Role.Name)
+                Amount = entity.Amount,
+                Role = await _unitOfWork.Roles.GetByName("Student"),
+                Party = await _unitOfWork.Parties.GetByPartyId("null")
             };
 
-            await _unitOfWork.Teachers.Create(student);
+            await _unitOfWork.Students.Create(student);
             await _unitOfWork.SaveAsync();
         }
     }

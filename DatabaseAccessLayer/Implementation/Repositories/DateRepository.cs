@@ -17,7 +17,7 @@ namespace DatabaseAccessLayer.Implementation.Repositories
 
         public DateRepository(AppDatabase db) => this.db = db;
 
-        public IEnumerable<Day> GetMonth(DateTime date, string? partyId)
+        public IEnumerable<Day> GetMonth(DateTime date, string partyId)
         {
             DateTime startOfCalendar = date.AddDays(-date.Day);
             DateTime startOfMonth = startOfCalendar.AddDays(-(int)startOfCalendar.DayOfWeek);
@@ -28,7 +28,7 @@ namespace DatabaseAccessLayer.Implementation.Repositories
             {
                 Day day = new Day
                 {
-                    Date = new DateOnly(startOfMonth.Year, startOfMonth.Month, startOfMonth.Day)
+                    Date = startOfMonth
                 };
 
                 days.Add(day);
