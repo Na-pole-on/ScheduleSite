@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Dtos.Dates
 {
-    internal class DayDTO
+    public class DayDTO
     {
+        public string? Id { get; set; }
+        public DateTime Date { get; set; }
+        public string? PartyIdentifier { get; set; }
+
+        public IEnumerable<EventDTO>? Events { get; set; }
     }
 }

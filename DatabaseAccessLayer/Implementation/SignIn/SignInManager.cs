@@ -31,9 +31,22 @@ namespace DatabaseAccessLayer.Implementation.SignIn
                 .Any(u => u.Any(u => u.Email == email));
 
         public User? GetUser(string email, string password) => db.Roles
-               .Select(r => r.Users)
-            .FirstOrDefault(ul => ul.Any(u => u.Email == email))
-            ?.FirstOrDefault(u => u.Email == email && u.PasswordHash == password);
+            .Select(r => r.Users.Select(u => new User
+            {
+                Id = u.Id,
+                Email = u.Email,
+                DateOfBirth = u.DateOfBirth,
+                LockoutEnabled = u.LockoutEnabled,
+                NormalizedEmail = u.NormalizedEmail,
+                NormalizedUserName = u.NormalizedUserName,
+                PasswordHash = u.PasswordHash,
+                PhoneNumber = u.PhoneNumber,
+                PhoneNumberConfirmed = u.PhoneNumberConfirmed,
+                UserName = u.UserName,
+                Role = new Role { Name = u.Role.Name }
+            }))
+            .FirstOrDefault(us => us.Any(us => us.Email == email))
+            .FirstOrDefault(us => us.Email == email && us.PasswordHash == password);
 
         public async Task SignIn(User entity) => await accessor.HttpContext
             .SignInAsync(GetClaimsPrincipal(entity));
@@ -49,7 +62,7 @@ namespace DatabaseAccessLayer.Implementation.SignIn
                 new Claim("UserName", entity.UserName),
                 new Claim("Email", entity.Email),
                 new Claim("PhoneNumber", entity.PhoneNumber),
-                new Claim("Role", entity.Role.Name)
+                new Claim(ClaimTypes.Role, entity.Role.Name)
             };
 
             return new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));

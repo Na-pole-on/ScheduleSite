@@ -9,6 +9,7 @@ namespace DatabaseAccessLayer.Interfaces.Repositories
 {
     public interface IRoleRepository
     {
+        IEnumerable<Role> GetAll();
         Task<Role?> GetByName(string name);
         Task Create(Role entity);
     }

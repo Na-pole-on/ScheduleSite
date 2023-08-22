@@ -1,4 +1,6 @@
-﻿using BusinessLogicLayer.Dtos.Profiles;
+﻿using BusinessLogicLayer.Cryptography;
+using BusinessLogicLayer.Dtos.Parties;
+using BusinessLogicLayer.Dtos.Profiles;
 using BusinessLogicLayer.Interfaces;
 using DatabaseAccessLayer.Entities.Profiles;
 using DatabaseAccessLayer.Interfaces.UnitOfWork;
@@ -38,7 +40,14 @@ namespace BusinessLogicLayer.Services.UserServices
                         Id = teacher.Role.Id,
                         Name = teacher.Role.Name,
                         NormalizedName = teacher.Role.NormalizedName,
-                    }
+                    },
+                    Parties = teacher.Parties.Select(t => new PartyDTO
+                    {
+                        Id = t.Id,
+                        Name = t.Name,
+                        Description = t.Description,
+                        PartyIdentifier = t.PartyIdentifier
+                    })
                 };
 
             return null;
@@ -66,7 +75,14 @@ namespace BusinessLogicLayer.Services.UserServices
                         Id = teacher.Role.Id,
                         Name = teacher.Role.Name,
                         NormalizedName = teacher.Role.NormalizedName,
-                    }
+                    },
+                    Parties = teacher.Parties.Select(t => new PartyDTO
+                    {
+                        Id = t.Id,
+                        Name = t.Name,
+                        Description = t.Description,
+                        PartyIdentifier = t.PartyIdentifier
+                    })
                 };
 
             return null;
@@ -94,10 +110,35 @@ namespace BusinessLogicLayer.Services.UserServices
                         Id = teacher.Role.Id,
                         Name = teacher.Role.Name,
                         NormalizedName = teacher.Role.NormalizedName,
-                    }
+                    },
+                    Parties = teacher.Parties.Select(t => new PartyDTO
+                    {
+                        Id = t.Id,
+                        Name = t.Name,
+                        Description = t.Description,
+                        PartyIdentifier = t.PartyIdentifier
+                    })
                 };
 
             return null;
+        }
+
+        public async Task Create(TeacherDTO entity)
+        {
+            Teacher teacher = new Teacher
+            {
+                DateOfBirth = entity.DateOfBirth,
+                Email = entity.Email,
+                UserName = entity.UserName,
+                NormalizedEmail = entity.Email.ToUpper(),
+                NormalizedUserName = entity.UserName.ToUpper(),
+                PasswordHash = Cipher.Encrypt(entity.PasswordHash),
+                PhoneNumber = entity.PhoneNumber,
+                Role = await _unitOfWork.Roles.GetByName("Teacher")
+            };
+
+            await _unitOfWork.Teachers.Create(teacher);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

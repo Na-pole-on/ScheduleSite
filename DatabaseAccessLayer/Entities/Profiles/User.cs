@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,8 @@ namespace DatabaseAccessLayer.Entities.Profiles
         public string? NormalizedEmail { get; set; }
         public string? PhoneNumber { get; set; }
         public bool PhoneNumberConfirmed { get; set; }
-        public DateOnly? DateOfBirth { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? DateOfBirth { get; set; }
         public string? PasswordHash { get; set; }
         public bool LockoutEnabled { get; set; }
 

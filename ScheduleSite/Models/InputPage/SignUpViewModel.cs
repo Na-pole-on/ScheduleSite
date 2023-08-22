@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace ScheduleSite.Models.InputPage
 {
@@ -9,6 +10,7 @@ namespace ScheduleSite.Models.InputPage
         [Required]
         [RegularExpression("(\\D{1,20})", ErrorMessage = "You can't use numbers!")]
         public string? UserName { get; set; }
+
 
         [Required]
         [EmailAddress]

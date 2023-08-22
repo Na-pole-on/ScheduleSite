@@ -4,6 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddBLLayer(builder.Configuration,
     builder.Configuration.GetConnectionString("Default"));
 
@@ -22,11 +23,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=InputPage}/{action=StartPage}/{id?}");
+    pattern: "{controller=Teacher}/{action=Home}/{id?}");
 
 app.Run();

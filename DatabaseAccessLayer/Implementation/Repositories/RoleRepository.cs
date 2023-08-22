@@ -16,6 +16,9 @@ namespace DatabaseAccessLayer.Implementation.Repositories
 
         public RoleRepository(AppDatabase db) => this.db = db;
 
+        public IEnumerable<Role> GetAll() => db.Roles
+            .Include(r => r.Users);
+
         public async Task<Role?> GetByName(string id) => await db.Roles
             .FirstOrDefaultAsync(ur => ur.Name == id);
 

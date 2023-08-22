@@ -1,0 +1,45 @@
+﻿@model ScheduleSite.Models.Parties.CreatePartyViewModel
+
+<div class="modal modal-signin position-static d-block py-5" tabindex="-1" role="dialog" id="modalSignin">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-4 shadow">
+
+            <div class="modal-header p-5 pb-4 border-bottom-0">
+                <h1 class="fw-bold mb-0 fs-2">Edit or add</h1>
+                <a asp-controller="Teacher" asp-action="Home" style="color: black; outline: none;"><i class="fa-solid fa-xmark"></i></a>
+            </div>
+
+            <div class="modal-body p-5 pt-0">
+                <form asp-controller="Teacher" asp-action="Party">
+
+                    <div class="mb-3">
+                        <input asp-for="Name" type="text" class="form-control rounded-3" placeholder="English club">
+                    </div>
+
+                    <div class="mb-3">
+                        <textarea asp-for="Description" class="form-control rounded-3" placeholder="It is my party"></textarea>
+                    </div>
+
+                    <button class="w-100 btn btn-lg rounded-3 btn-primary" type="submit">Add new party</button>
+
+                    <hr class="my-3">
+                    <h2 class="fs-5 fw-bold mb-3">Use a second-party</h2>
+                    <button class="w-100 py-2 mb-2 btn btn-outline-dark rounded-3" type="submit">
+                        <svg class="bi me-1" width="16" height="16"><use xlink:href="#twitter" /></svg>
+                        Sign up with Twitter
+                    </button>
+                    <button class="w-100 py-2 mb-2 btn btn-outline-primary rounded-3" type="submit">
+                        <svg class="bi me-1" width="16" height="16"><use xlink:href="#facebook" /></svg>
+                        Sign up with Facebook
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let header = document.getElementById("header");
+
+    header.style = "display: none;";
+</script>
