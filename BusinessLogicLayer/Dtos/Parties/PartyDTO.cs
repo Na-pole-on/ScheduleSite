@@ -19,5 +19,6 @@ namespace BusinessLogicLayer.Dtos.Parties
         public string? NameTeacher { get; set; }
 
         public IEnumerable<DayDTO>? Days { get; set; }
+        public IEnumerable<StudentDTO>? Students { get; set; } 
     }
 }

@@ -64,7 +64,16 @@ namespace ScheduleSite.Converter
                 Id = entity.Id,
                 Description = entity.Description,
                 Name = entity.Name,
-                PartyIdentifier = entity.PartyIdentifier
+                PartyIdentifier = entity.PartyIdentifier,
+                Students = entity.Students.Select(s => new StudentViewModel
+                {
+                    Id = s.Id,
+                    UserName = s.UserName,
+                    Email = s.Email,
+                    PhoneNumber = s.PhoneNumber,
+                    DateOfBirth = s.DateOfBirth,
+                    Amount = s.Amount
+                }).ToList()
             };
         }
         public static List<DayViewModel> ToDayViewModel(IEnumerable<DayDTO> entities, DateTime date)

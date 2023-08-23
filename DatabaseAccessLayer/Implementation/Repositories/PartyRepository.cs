@@ -19,15 +19,18 @@ namespace DatabaseAccessLayer.Implementation.Repositories
 
         public IEnumerable<Party> GetAll() => db.Parties
             .Include(p => p.StudentParties)
+            .Include(p => p.Students)
             .Include(p => p.Days);
 
         public Task<Party?> GetById(string id) => db.Parties
             .Include(p => p.StudentParties)
+            .Include(p => p.Students)
             .Include(p => p.Days)
             .FirstOrDefaultAsync(p => p.Id == id);
 
         public Task<Party?> GetByPartyId(string partyId) => db.Parties
             .Include(p => p.StudentParties)
+            .Include(p => p.Students)
             .Include(p => p.Days)
             .FirstOrDefaultAsync(p => p.PartyIdentifier == partyId);
 
