@@ -11,6 +11,6 @@ namespace ScheduleSite.ViewModels
         public DateTime GetDate { get; set; }
 
         public PartyViewModel? Party { get; set; }
-        public string PartyIdentifier { get; set; } = "";
+        public string PartyIdentifier { get; set; } = "null";
     }
 }

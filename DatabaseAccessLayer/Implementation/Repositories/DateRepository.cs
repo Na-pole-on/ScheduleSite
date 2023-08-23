@@ -29,8 +29,20 @@ namespace DatabaseAccessLayer.Implementation.Repositories
             {
                 Day day = new Day
                 {
-                    Date = startOfMonth
+                    Date = startOfMonth,
                 };
+
+                if (partyId != "null")
+                {
+                    Day? d = db.Days
+                        .Include(d => d.Events)
+                        .FirstOrDefault(d => d.Date.Date == startOfMonth.Date && d.PartyIdentifier == partyId);
+
+                    if (d is not null)
+                        day.Events = d.Events;
+
+                }
+
 
                 days.Add(day);
                 startOfMonth = startOfMonth.AddDays(1);
@@ -40,18 +52,14 @@ namespace DatabaseAccessLayer.Implementation.Repositories
         }
 
         public async Task<Day?> GetDayByDate(DateTime date) => await db.Days
-            .FirstOrDefaultAsync(d => d.Date == date);
+            .Include(d => d.Events)
+            .FirstOrDefaultAsync(d => d.Date.Date == date.Date);
 
         public async Task CreateEvent(Event entity)
         {
             Day? day = await GetDayByDate(entity.Date);
 
-            if(day is not null)
-            {
-                entity.Day = day;
-                await db.Events.AddAsync(entity);
-            }
-            else
+            if(day is null)
             {
                 day = new Day
                 {
@@ -59,10 +67,10 @@ namespace DatabaseAccessLayer.Implementation.Repositories
                     Party = await db.Parties.FirstOrDefaultAsync(p => p.PartyIdentifier == entity.Day.PartyIdentifier)
                 };
                 await db.Days.AddAsync(day);
-
-                entity.Day = day;
-                await db.Events.AddAsync(entity);
             }
+
+            entity.Day = day;
+            await db.Events.AddAsync(entity);
         }
 
     }

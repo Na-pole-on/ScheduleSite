@@ -90,6 +90,11 @@
                                     <i class="bi calendar-event bi-calendar-event"></i>
                                 }
 
+                                @if (day.Events.Count() > 0)
+                                {
+                                    <i class="bi calendar-event bi-calendar-event"></i>
+                                }
+
                             }
                             else
                             {
@@ -112,7 +117,44 @@
                                         {
                                             @if (day.Events.Count() > 0)
                                             {
-                                                
+                                                <div class="overflow-x-auto scroll-event w-100">
+                                                    <table class="table">
+
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">#</th>
+                                                                <th scope="col">Name</th>
+                                                                <th scope="col">Time</th>
+                                                                <th scope="col">Result</th>
+                                                                <th scope="col">Actions</th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                            @{
+                                                                int i = 1;
+                                                            }
+
+                                                            @foreach (var info in day.Events)
+                                                            {
+
+                                                                <tr>
+                                                                    <td>@i</td>
+                                                                    <td>@info.Name</td>
+                                                                    <td>@info.Time.ToShortTimeString()</td>
+                                                                    <td>@info.GetResult()</td>
+                                                                    <td>
+                                                                        <a asp-controller="Input" asp-action="Edit" asp-route-id="@info.Id" asp-route-date="@day.Date.Value.ToString("d")" class="btn btn-secondary">Edit</a>
+                                                                        <a asp-controller="Home" asp-action="Delete" asp-route-id="@info.Id" class="btn btn-danger">Delete</a>
+                                                                    </td>
+                                                                </tr>
+
+                                                                ++i;
+                                                            }
+                                                        </tbody>
+
+                                                    </table>
+                                                </div>
                                             }
                                             else
                                             {
