@@ -21,7 +21,17 @@ namespace BusinessLogicLayer.Services.Date
             .Select(d => new DayDTO
             {
                 Id = d.Id,
-                Date = d.Date
+                Date = d.Date,
+                Events = (d.Events is not null) 
+                ? d.Events.Select(e => new EventDTO
+                {
+                    Id = e.Id,
+                    Name = e.Name,
+                    Date = e.Date,
+                    Result = e.Result,
+                    Time = e.Time
+                })
+                : null
             });
 
         public async Task CreateEvent(EventDTO dto)

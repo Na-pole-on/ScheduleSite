@@ -74,7 +74,16 @@ namespace ScheduleSite.Converter
                 Id = d.Id,
                 Date = new DateTime(d.Date.Year, d.Date.Month, d.Date.Day),
                 IsToday = (d.Date.Day == DateTime.Now.Day && d.Date.Month == DateTime.Now.Month && d.Date.Year == DateTime.Now.Year) ? true : false,
-                IsThisMonth = (d.Date.Month == date.Month && d.Date.Year == date.Year) ? true : false
+                IsThisMonth = (d.Date.Month == date.Month && d.Date.Year == date.Year) ? true : false,
+                Events = (d.Events is not null)
+                ? d.Events.Select(h => new EventViewModel
+                {
+                    Id = h.Id,
+                    Name = h.Name,
+                    Result = h.Result,
+                    Time = new DateTime(d.Date.Year, d.Date.Month, d.Date.Day, h.Time.Hour, h.Time.Minute, 0)
+                }).ToList()
+                : new List<EventViewModel>()
             }).ToList();
         }
     }
