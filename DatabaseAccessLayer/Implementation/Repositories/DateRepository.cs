@@ -1,6 +1,7 @@
 ﻿using DatabaseAccessLayer.Database;
 using DatabaseAccessLayer.Entities.Dates;
 using DatabaseAccessLayer.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,32 @@ namespace DatabaseAccessLayer.Implementation.Repositories
             }
 
             return days;
+        }
+
+        public async Task<Day?> GetDayByDate(DateTime date) => await db.Days
+            .FirstOrDefaultAsync(d => d.Date == date);
+
+        public async Task CreateEvent(Event entity)
+        {
+            Day? day = await GetDayByDate(entity.Date);
+
+            if(day is not null)
+            {
+                entity.Day = day;
+                await db.Events.AddAsync(entity);
+            }
+            else
+            {
+                day = new Day
+                {
+                    Date = entity.Date,
+                    Party = await db.Parties.FirstOrDefaultAsync(p => p.PartyIdentifier == entity.Day.PartyIdentifier)
+                };
+                await db.Days.AddAsync(day);
+
+                entity.Day = day;
+                await db.Events.AddAsync(entity);
+            }
         }
 
     }

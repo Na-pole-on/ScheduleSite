@@ -1,9 +1,11 @@
-﻿using BusinessLogicLayer.Dtos.Parties;
+﻿using BusinessLogicLayer.Dtos.Dates;
+using BusinessLogicLayer.Dtos.Parties;
 using BusinessLogicLayer.Dtos.Profiles;
 using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ScheduleSite.Converter;
+using ScheduleSite.Models.Dates;
 using ScheduleSite.Models.Parties;
 using ScheduleSite.ViewModels;
 
@@ -90,6 +92,22 @@ namespace ScheduleSite.Controllers
             models.GetDate = Convert.ToDateTime(date);
 
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Event(EventViewModel model)
+        {
+            EventDTO dto = new EventDTO
+            {
+                Name = model.Name,
+                Time = model.Time,
+                Date = models.GetDate,
+                Day = new DayDTO { PartyIdentifier = models.PartyIdentifier }
+            };
+
+            await _dateService.CreateEvent(dto);
+
+            return RedirectToAction("Home");
         }
     }
 }

@@ -12,5 +12,8 @@ namespace BusinessLogicLayer.Dtos.Dates
         public string? Name { get; set; }
         public int Result { get; set; }
         public DateTime Time { get; set; }
+
+        public DayDTO? Day { get; set; }
+        public DateTime Date { get; set; }
     }
 }
