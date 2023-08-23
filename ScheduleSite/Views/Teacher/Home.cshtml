@@ -20,7 +20,42 @@
             <div class="my-3">
                 @if (Model.Party is not null)
                 {
-                    
+                    <div class="overflow-x-auto scroll w-100">
+
+                        <h2>@Model.Party.Name</h2>
+
+                        <div class="info mb-3">
+                            @Model.Party.Description
+                        </div>
+
+                        @if (Model.Party.Students.Count() != 0)
+                        {
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">Date of birth</th>
+                                        <th scope="col">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var student in Model.Party.Students)
+                                    {
+                                        <tr>
+                                            <th><a class="text-decoration-none" asp-action="Account">@student.UserName</a></th>
+                                            <td>@student.DateOfBirth.Value.ToShortDateString()</td>
+                                            <td>$@student.Amount</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="text-center">You don't have students</div>
+                        }
+
+                    </div>
                 }
                 else
                 {
@@ -87,14 +122,8 @@
 
                                 @if (day.Events.Count() > 0)
                                 {
-                                    <i class="bi calendar-event bi-calendar-event"></i>
+                                    <i class="fa-solid fa-triangle-exclamation calendar-event"></i>
                                 }
-
-                                @if (day.Events.Count() > 0)
-                                {
-                                    <i class="bi calendar-event bi-calendar-event"></i>
-                                }
-
                             }
                             else
                             {
@@ -144,8 +173,8 @@
                                                                     <td>@info.Time.ToShortTimeString()</td>
                                                                     <td>@info.GetResult()</td>
                                                                     <td>
-                                                                        <a asp-controller="Input" asp-action="Edit" asp-route-id="@info.Id" asp-route-date="@day.Date.Value.ToString("d")" class="btn btn-secondary">Edit</a>
-                                                                        <a asp-controller="Home" asp-action="Delete" asp-route-id="@info.Id" class="btn btn-danger">Delete</a>
+                                                                        <a asp-controller="Teacher" asp-action="Edit" asp-route-id="@info.Id" asp-route-date="@day.Date.Value.ToString("d")" class="btn btn-secondary">Edit</a>
+                                                                        <a asp-controller="Teacher" asp-action="Delete" asp-route-id="@info.Id" class="btn btn-danger">Delete</a>
                                                                     </td>
                                                                 </tr>
 

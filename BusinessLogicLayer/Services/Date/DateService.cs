@@ -47,5 +47,12 @@ namespace BusinessLogicLayer.Services.Date
             await _unitOfWork.Dates.CreateEvent(@event);
             await _unitOfWork.SaveAsync();
         }
+
+        public async Task DeleteEvent(string id)
+        {
+            await _unitOfWork.Dates
+            .DeleteEvent(id);
+            await _unitOfWork.SaveAsync();
+        }
     }
 }

@@ -109,5 +109,16 @@ namespace ScheduleSite.Controllers
 
             return RedirectToAction("Home");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(string id)
+        {
+            await _dateService.DeleteEvent(id);
+
+            return RedirectToAction("Home");
+        }
+
+        [HttpGet]
+        public IActionResult Edit(string id) => Json(id);
     }
 }

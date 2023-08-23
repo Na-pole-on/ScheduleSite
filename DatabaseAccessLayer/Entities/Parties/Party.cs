@@ -19,6 +19,7 @@ namespace DatabaseAccessLayer.Entities.Parties
         public string? NameTeacher { get; set; }
 
         public IEnumerable<StudentParties>? StudentParties { get; set; }
+        public IEnumerable<Student>? Students { get; set; }
         public IEnumerable<Day>? Days { get; set; }
     }
 }

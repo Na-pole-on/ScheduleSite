@@ -111,6 +111,12 @@ namespace DatabaseAccessLayer.Database
                 .HasPrincipalKey(p => p.PartyIdentifier)
                 .HasForeignKey(sp => sp.PartyIdentifier);
 
+            modelBuilder.Entity<Party>()
+                .HasMany(p => p.Students)
+                .WithOne(s => s.Party)
+                .HasPrincipalKey(p => p.PartyIdentifier)
+                .HasForeignKey(s => s.PartyIdentifier);
+
             //Dates
             modelBuilder.Entity<Day>()
                 .HasMany(d => d.Events)

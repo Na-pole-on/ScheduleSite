@@ -73,5 +73,13 @@ namespace DatabaseAccessLayer.Implementation.Repositories
             await db.Events.AddAsync(entity);
         }
 
+        public async Task DeleteEvent(string id)
+        {
+            Event? @event = await db.Events.FirstOrDefaultAsync(e => e.Id == id);
+
+            if(@event is not null)
+                db.Events.Remove(@event);
+        }
+
     }
 }

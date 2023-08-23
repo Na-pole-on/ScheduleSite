@@ -11,5 +11,6 @@ namespace BusinessLogicLayer.Interfaces
     {
         IEnumerable<DayDTO> GetMonth(DateTime date, string partyId);
         Task CreateEvent(EventDTO dto);
+        Task DeleteEvent(string id);
     }
 }

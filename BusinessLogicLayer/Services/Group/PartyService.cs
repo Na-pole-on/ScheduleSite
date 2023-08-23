@@ -29,7 +29,17 @@ namespace BusinessLogicLayer.Services.Group
                     Name = party.Name,
                     Description = party.Description,
                     NameTeacher = party.NameTeacher,
-                    PartyIdentifier = party.PartyIdentifier
+                    PartyIdentifier = party.PartyIdentifier,
+                    Students = party.Students.Select(s => new StudentDTO
+                    {
+                        Id = s.Id,
+                        Amount = s.Amount,
+                        DateOfBirth = s.DateOfBirth,
+                        Email = s.Email,
+                        NormalizedUserName = s.NormalizedUserName,
+                        PhoneNumber = s.PhoneNumber,
+                        UserName = s.UserName,
+                    })
                 };
 
             return null;
@@ -46,7 +56,17 @@ namespace BusinessLogicLayer.Services.Group
                     Name = party.Name,
                     Description = party.Description,
                     NameTeacher = party.NameTeacher,
-                    PartyIdentifier= party.PartyIdentifier
+                    PartyIdentifier = party.PartyIdentifier,
+                    Students = party.Students.Select(s => new StudentDTO
+                    {
+                        Id = s.Id,
+                        Amount = s.Amount,
+                        DateOfBirth = s.DateOfBirth,
+                        Email = s.Email,
+                        NormalizedUserName  = s.NormalizedUserName,
+                        PhoneNumber = s.PhoneNumber,
+                        UserName = s.UserName,
+                    })
                 };
 
             return null;
