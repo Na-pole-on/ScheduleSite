@@ -1,5 +1,6 @@
 ﻿using BusinessLogicLayer.Dtos.Dates;
 using BusinessLogicLayer.Interfaces;
+using DatabaseAccessLayer.Entities.Dates;
 using DatabaseAccessLayer.Interfaces.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -22,5 +23,19 @@ namespace BusinessLogicLayer.Services.Date
                 Id = d.Id,
                 Date = d.Date
             });
+
+        public async Task CreateEvent(EventDTO dto)
+        {
+            Event @event = new Event
+            {
+                Name = dto.Name,
+                Time = dto.Time,
+                Date = dto.Date,
+                Day = new Day { PartyIdentifier = dto.Day.PartyIdentifier }
+            };
+
+            await _unitOfWork.Dates.CreateEvent(@event);
+            await _unitOfWork.SaveAsync();
+        }
     }
 }
