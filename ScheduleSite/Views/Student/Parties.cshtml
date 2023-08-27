@@ -1,0 +1,53 @@
+﻿@model ScheduleSite.ViewModels.ListOfStudentViewModel
+
+<section class="py-3 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">List of parties</h1>
+            <p class="lead text-body-secondary">Hello, choose a group wisely and according to your capabilities. Come on, I'm burning out, choose what you want!)</p>
+        </div>
+    </div>
+</section>
+
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        @if(Model.Parties is not null)
+        {
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                @foreach (PartyViewModel party in Model.Parties)
+                {
+                    <div class="col">
+                        <div class="card shadow-sm">
+
+                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" role="img" focusable="false">
+                                <title>@party.Name</title>
+                                <rect width="100%" height="100%" fill="#55595c"></rect>
+                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">@party.Name</text>
+                            </svg>
+
+                            <div class="card-body">
+
+                                <div class="items-row">
+                                    <p class="party-text">@party.Description</p>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a asp-action="" class="btn btn-sm btn-outline-secondary">Add</a>
+                                    </div>
+                                    <small class="text-body-secondary">@party.Students.Count() - students</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="mb-3" style="display: flex; justify-content: center;">
+                <a>The parties have not yet been delivered, wait for delivery!</a>
+            </div>
+        }
+    </div>
+</div>

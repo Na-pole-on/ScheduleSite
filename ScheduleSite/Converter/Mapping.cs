@@ -36,19 +36,19 @@ namespace ScheduleSite.Converter
                 UserName = model.UserName
             };
         }
-        public static TeacherViewModel ToTeacherViewModel(TeacherDTO entity)
+        public static TeacherViewModel ToTeacherViewModel(TeacherDTO dto)
         {
             return new TeacherViewModel
             {
-                Id = entity.Id,
-                UserName = entity.UserName,
-                Email = entity.Email,
-                PhoneNumber = entity.PhoneNumber,
-                DateOfBirth = new DateTime(entity.DateOfBirth.Value.Year,
-                entity.DateOfBirth.Value.Month,
-                entity.DateOfBirth.Value.Day),
-                UserRole = new RoleViewModel { Name = entity.Role.Name },
-                Parties = entity.Parties.Select(p => new PartyViewModel
+                Id = dto.Id,
+                UserName = dto.UserName,
+                Email = dto.Email,
+                PhoneNumber = dto.PhoneNumber,
+                DateOfBirth = new DateTime(dto.DateOfBirth.Value.Year,
+                dto.DateOfBirth.Value.Month,
+                dto.DateOfBirth.Value.Day),
+                UserRole = new RoleViewModel { Name = dto.Role.Name },
+                Parties = dto.Parties.Select(p => new PartyViewModel
                 {
                     Id = p.Id,
                     Name = p.Name,
@@ -57,15 +57,16 @@ namespace ScheduleSite.Converter
                 }).ToList(),
             };
         }
-        public static PartyViewModel ToPartyViewModel(PartyDTO entity)
+
+        public static PartyViewModel ToPartyViewModel(PartyDTO dto)
         {
             return new PartyViewModel
             {
-                Id = entity.Id,
-                Description = entity.Description,
-                Name = entity.Name,
-                PartyIdentifier = entity.PartyIdentifier,
-                Students = entity.Students.Select(s => new StudentViewModel
+                Id = dto.Id,
+                Description = dto.Description,
+                Name = dto.Name,
+                PartyIdentifier = dto.PartyIdentifier,
+                Students = dto.Students.Select(s => new StudentViewModel
                 {
                     Id = s.Id,
                     UserName = s.UserName,
@@ -76,9 +77,30 @@ namespace ScheduleSite.Converter
                 }).ToList()
             };
         }
-        public static List<DayViewModel> ToDayViewModel(IEnumerable<DayDTO> entities, DateTime date)
+
+        public static List<PartyViewModel> ToPartyViewModel(IEnumerable<PartyDTO> dtos)
         {
-            return entities.Select(d => new DayViewModel
+            return dtos.Select(d => new PartyViewModel
+            {
+                Id = d.Id,
+                Description = d.Description,
+                Name = d.Name,
+                PartyIdentifier = d.PartyIdentifier,
+                Students = d.Students.Select(s => new StudentViewModel
+                {
+                    Id = s.Id,
+                    UserName = s.UserName,
+                    Email = s.Email,
+                    PhoneNumber = s.PhoneNumber,
+                    DateOfBirth = s.DateOfBirth,
+                    Amount = s.Amount
+                }).ToList()
+            }).ToList();
+        }
+
+        public static List<DayViewModel> ToDayViewModel(IEnumerable<DayDTO> dtos, DateTime date)
+        {
+            return dtos.Select(d => new DayViewModel
             {
                 Id = d.Id,
                 Date = new DateTime(d.Date.Year, d.Date.Month, d.Date.Day),
@@ -94,6 +116,30 @@ namespace ScheduleSite.Converter
                 }).ToList()
                 : new List<EventViewModel>()
             }).ToList();
+        }
+        public static EventViewModel ToEventViewModel(EventDTO dto)
+        {
+            return new EventViewModel
+            {
+                Id = dto.Id,
+                Name = dto.Name,
+                Time = dto.Time
+            };
+        }
+        public static StudentViewModel ToStudentViewModel(StudentDTO entity)
+        {
+            return new StudentViewModel
+            {
+                Id = entity.Id,
+                UserName = entity.UserName,
+                Email = entity.Email,
+                PhoneNumber = entity.PhoneNumber,
+                DateOfBirth = new DateTime(entity.DateOfBirth.Value.Year,
+                entity.DateOfBirth.Value.Month,
+                entity.DateOfBirth.Value.Day),
+                PartyIdentifier = entity.PartyIdentifier,
+                UserRole = new RoleViewModel { Name = entity.Role.Name }
+            };
         }
     }
 }

@@ -75,7 +75,11 @@
     height: 2.25rem;
 }
 
-.scroll-event {
-    max-height: 15rem;
-    white-space: nowrap;
+.party-text {
+    width: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
 }

@@ -20,17 +20,17 @@
             <div class="my-3">
                 @if (Model.Party is not null)
                 {
-                    <div class="overflow-x-auto scroll w-100">
+                    <h2>@Model.Party.Name</h2>
 
-                        <h2>@Model.Party.Name</h2>
+                    <div class="info mb-3">
+                        @Model.Party.Description
+                    </div>
 
-                        <div class="info mb-3">
-                            @Model.Party.Description
-                        </div>
+                    <div class="">
 
                         @if (Model.Party.Students.Count() != 0)
                         {
-                            <table class="table">
+                            <table class="table overflow-y-auto scroll w-100">
                                 <thead>
                                     <tr>
                                         <th scope="col">Username</th>

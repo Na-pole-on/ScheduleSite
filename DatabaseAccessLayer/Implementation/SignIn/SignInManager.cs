@@ -30,7 +30,7 @@ namespace DatabaseAccessLayer.Implementation.SignIn
                 .Select(r => r.Users)
                 .Any(u => u.Any(u => u.Email == email));
 
-        public User? GetUser(string email, string password) => db.Roles
+        public IEnumerable<User>? GetUser(string email, string password) => db.Roles
             .Select(r => r.Users.Select(u => new User
             {
                 Id = u.Id,
@@ -45,8 +45,7 @@ namespace DatabaseAccessLayer.Implementation.SignIn
                 UserName = u.UserName,
                 Role = new Role { Name = u.Role.Name }
             }))
-            .FirstOrDefault(us => us.Any(us => us.Email == email))
-            .FirstOrDefault(us => us.Email == email && us.PasswordHash == password);
+            .FirstOrDefault(us => us.Any(us => us.Email == email && us.PasswordHash == password));
 
         public async Task SignIn(User entity) => await accessor.HttpContext
             .SignInAsync(GetClaimsPrincipal(entity));

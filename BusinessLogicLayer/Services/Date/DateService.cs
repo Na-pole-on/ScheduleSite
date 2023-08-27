@@ -34,6 +34,21 @@ namespace BusinessLogicLayer.Services.Date
                 : null
             });
 
+        public async Task<EventDTO> GetEventById(string id)
+        {
+            Event? @event = await _unitOfWork.Dates.GetEventById(id);
+
+            if (@event is not null)
+                return new EventDTO
+                {
+                    Id = @event.Id,
+                    Name = @event.Name,
+                    Time = @event.Time,
+                };
+
+            return null;
+        }
+
         public async Task CreateEvent(EventDTO dto)
         {
             Event @event = new Event

@@ -34,6 +34,7 @@
 
                         @if (User.Claims.FirstOrDefault(c => c.Type == ClaimsIdentity.DefaultRoleClaimType).Value == "Student")
                         {
+                            <li><a asp-action="Parties" class="nav-link px-2 link-dark font">Parties</a></li>
                             <li><a asp-action="" class="nav-link px-2 link-dark font">Top up</a></li>
                         }
 
