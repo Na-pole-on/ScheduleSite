@@ -9,30 +9,35 @@
     <link rel="stylesheet" href="~/css/bootstrap/bootstrap-grid.css" />
     <link rel="stylesheet" href="~/css/bootstrap/bootstrap-reboot.css" />
     <link rel="stylesheet" href="~/css/bootstrap/bootstrap-utilities.css" />
-    <link rel="stylesheet" href="~/css/calendar/home-style.css" />
+    <link rel="stylesheet" href="~/css/calendar/calendar.css" />
+    <link rel="stylesheet" href="~/css/calendar/site.css" />
 
 </head>
 <body>
     
+    @{
+        string role = User.Claims.FirstOrDefault(c => c.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
+    }
+
     @if (User.Identity.IsAuthenticated)
     {
         <header class="p-3 mb-3 border-bottom" id="header" style="display: block;">
             <div class="container">
                 <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 
-                    <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
+                    <a class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
                         <img class="homelogo" src="~/photo/homelogo.png" />
                     </a>
 
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                        <li><a href="#" class="nav-link px-2 link-secondary font">Home</a></li>
+                        <li><a href="/@role/Home" class="nav-link px-2 link-secondary font">Home</a></li>
 
-                        @if (User.Claims.FirstOrDefault(c => c.Type == ClaimsIdentity.DefaultRoleClaimType).Value == "Teacher")
+                        @if (role == "Teacher")
                         {
                             <li><a asp-action="Party" class="nav-link px-2 link-dark font">Create party</a></li>
                         }
 
-                        @if (User.Claims.FirstOrDefault(c => c.Type == ClaimsIdentity.DefaultRoleClaimType).Value == "Student")
+                        @if (role == "Student")
                         {
                             <li><a asp-action="Parties" class="nav-link px-2 link-dark font">Parties</a></li>
                             <li><a asp-action="" class="nav-link px-2 link-dark font">Top up</a></li>

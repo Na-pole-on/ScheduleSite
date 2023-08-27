@@ -44,7 +44,7 @@ namespace DatabaseAccessLayer.Implementation.Repositories
 
         public async Task Remove(Student entity)
         {
-            Party? party = await GetByPartyId("Empty");
+            Party? party = await GetByPartyId("null");
 
             if (party is not null)
                 entity.Party = party;

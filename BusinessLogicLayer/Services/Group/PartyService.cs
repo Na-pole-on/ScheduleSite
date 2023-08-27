@@ -3,6 +3,7 @@ using BusinessLogicLayer.Dtos.Parties;
 using BusinessLogicLayer.Dtos.Profiles;
 using BusinessLogicLayer.Interfaces;
 using DatabaseAccessLayer.Entities.Parties;
+using DatabaseAccessLayer.Entities.Profiles;
 using DatabaseAccessLayer.Interfaces.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -110,6 +111,15 @@ namespace BusinessLogicLayer.Services.Group
 
         public async Task Add(StudentDTO dto)
         {
+            Student? student = await _unitOfWork.Students
+                .GetById(dto.Id);
+
+            if(student is not null)
+            {
+                student.PartyIdentifier = dto.PartyIdentifier;
+                await _unitOfWork.Parties.Add(student);
+                await _unitOfWork.SaveAsync();
+            }
 
         }
 
