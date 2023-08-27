@@ -55,6 +55,9 @@ namespace DatabaseAccessLayer.Implementation.Repositories
             .Include(d => d.Events)
             .FirstOrDefaultAsync(d => d.Date.Date == date.Date);
 
+        public async Task<Event?> GetEventById(string id) => await db.Events
+            .FirstOrDefaultAsync(e => e.Id == id);
+
         public async Task CreateEvent(Event entity)
         {
             Day? day = await GetDayByDate(entity.Date);
@@ -75,7 +78,7 @@ namespace DatabaseAccessLayer.Implementation.Repositories
 
         public async Task DeleteEvent(string id)
         {
-            Event? @event = await db.Events.FirstOrDefaultAsync(e => e.Id == id);
+            Event? @event = await GetEventById(id);
 
             if(@event is not null)
                 db.Events.Remove(@event);

@@ -12,11 +12,11 @@
             <div class="modal-body p-5 pt-0">
                 <form asp-controller="Teacher" asp-action="Event">
                     <div class="mb-3">
-                        <input asp-for="Name" type="text" class="form-control rounded-3" id="floatingInput" placeholder="Name of event">
+                        <input asp-for="Name" value="@Model.Name" type="text" class="form-control rounded-3" id="floatingInput" placeholder="Name of event">
                     </div>
 
                     <div class="mb-3">
-                        <input asp-for="Time" type="time" class="form-control" placeholder="Time" aria-label="Username" />
+                        <input asp-for="Time" value="@Model.Time" type="time" class="form-control" placeholder="Time" aria-label="Username" />
                     </div>
 
                     <input asp-for="Id" type="number" style="display: none;" />

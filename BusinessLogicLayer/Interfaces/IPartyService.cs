@@ -12,6 +12,7 @@ namespace BusinessLogicLayer.Interfaces
 {
     public interface IPartyService
     {
+        IEnumerable<PartyDTO> GetAll();
         Task<PartyDTO?> GetById(string id);
         Task<PartyDTO?> GetByPartyId(string partyId);
         Task Add(StudentDTO entity);

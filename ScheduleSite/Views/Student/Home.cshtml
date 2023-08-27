@@ -1,1 +1,174 @@
-﻿
+﻿@model ScheduleSite.ViewModels.ListOfStudentViewModel
+
+<div class="container col-xl-12 col-xxl-12">
+    <div class="row home g-lg-12">
+
+        <div class="col-md-10 mx-auto col-lg-4">
+
+            <form asp-action="PartyEntrance" class="row">
+
+                
+
+            </form>
+
+            <div class="my-2">
+                @if (Model.Student.PartyIdentifier != "null")
+                {
+                    <h2>@Model.Student.Party.Name</h2>
+
+                    <div class="">
+                        @Model.Student.Party.Description
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center">Choose a party</div>
+                }
+            </div>
+
+        </div>
+
+        <div class="col-md-10 mx-auto col-lg-8">
+
+            <div class="cal">
+
+                <div class="cal-header cal-header-items">
+
+                    <form asp-action="Home">
+                        <button class="cal-calendar" asp-route-date="@Model.GetDate.AddMonths(-1).ToString()" type="submit">
+                            <i class="fa-solid fa-chevron-left cal-i"></i>
+                        </button>
+                    </form>
+
+                    <div class="">
+                        @Model.GetDate.ToString("MMM yy",
+                        CultureInfo.CreateSpecificCulture("en"))
+                    </div>
+
+                    <form asp-action="Home">
+                        <button class="cal-calendar" asp-route-date="@Model.GetDate.AddMonths(1).ToString()" type="submit">
+                            <i class="fa-solid fa-chevron-right cal-i"></i>
+                        </button>
+                    </form>
+
+                </div>
+
+
+                <div class="cal-weekdays">
+                    <div class="cal-btn">SUN</div>
+                    <div class="cal-btn">MON</div>
+                    <div class="cal-btn">THU</div>
+                    <div class="cal-btn">WEN</div>
+                    <div class="cal-btn">THR</div>
+                    <div class="cal-btn">FRI</div>
+                    <div class="cal-btn">SAT</div>
+                </div>
+
+
+                <div class="cal-days">
+
+                    @foreach (DayViewModel day in Model.Month)
+                    {
+                        <button class="cal-day-btn" data-bs-toggle="modal" data-bs-target="#day-@day.Date.Value.Day">
+
+                            @if (day.IsThisMonth)
+                            {
+                                @if (day.IsToday)
+                                {
+                                    <p style="color: red;">@day.Date.Value.Day</p>
+                                }
+                                else
+                                {
+                                    <p>@day.Date.Value.Day</p>
+                                }
+                            }
+                            else
+                            {
+                                <p style="color: #d6d6d9">@day.Date.Value.Day</p>
+                            }
+
+                            @if (day.Events.Count() > 0)
+                            {
+                                <i class="calendar-event fa-solid fa-triangle-exclamation"></i>
+                            }
+
+                        </button>
+
+                        <div class="modal fade normal-font" id="day-@day.Date.Value.Day" tabindex="-1" aria-labelledby="label-@day.Date.Value.Day" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <div class="modal-header m-0">
+                                        <h4 class="modal-title" id="label-@day.Date.Value.Day">Event of day</h4>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        @if (Model.Student.PartyIdentifier != "null")
+                                        {
+                                            @if (day.Events.Count() > 0)
+                                            {
+                                                <div class="overflow-x-auto scroll-event w-100">
+                                                    <table class="table">
+
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">#</th>
+                                                                <th scope="col">Name</th>
+                                                                <th scope="col">Time</th>
+                                                                <th scope="col">Result</th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                            @{
+                                                                int i = 1;
+                                                            }
+
+                                                            @foreach (var info in day.Events)
+                                                            {
+
+                                                                <tr>
+                                                                    <td>@i</td>
+                                                                    <td>@info.Name</td>
+                                                                    <td>@info.Time.ToShortTimeString()</td>
+                                                                    <td>@info.GetResult()</td>
+                                                                </tr>
+
+                                                                ++i;
+                                                            }
+                                                        </tbody>
+
+                                                    </table>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="mb-3" style="display: flex; justify-content: center;">
+                                                    <a>There aren't events on this day!</a>
+                                                </div>
+                                            }
+
+                                            <div class="d-flex justify-content-end">
+                                                <button type="button" class="btn btn-secondary m-1" data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="text-center my-3">Choose a party</div>
+                                        }
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

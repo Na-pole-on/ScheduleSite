@@ -11,6 +11,7 @@ namespace DatabaseAccessLayer.Interfaces.Repositories
     {
         IEnumerable<Day> GetMonth(DateTime date, string partyId);
         Task<Day?> GetDayByDate(DateTime date);
+        Task<Event?> GetEventById(string id);
         Task CreateEvent(Event entity);
         Task DeleteEvent(string id);
     }

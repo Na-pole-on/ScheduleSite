@@ -21,19 +21,25 @@ namespace BusinessLogicLayer.Services.Authentication
 
         public async Task<int> SignIn(string email, string password)
         {
-            User? user = _unitOfWork.SignInManager
+            IEnumerable<User>? users = _unitOfWork.SignInManager
                 .GetUser(email, Cipher.Encrypt(password));
 
-            if (user is not null)
+            if (users is not null)
             {
-                await _unitOfWork.SignInManager
-                    .SignIn(user);
+                User? user = users
+                    .FirstOrDefault(u => u.Email == email && u.PasswordHash == Cipher.Encrypt(password));
 
-                if (user.Role.Name == "Student")
-                    return 1;
+                if (user is not null)
+                {
+                    await _unitOfWork.SignInManager
+                        .SignIn(user);
 
-                if (user.Role.Name == "Teacher")
-                    return 2;
+                    if (user.Role.Name == "Student")
+                        return 1;
+
+                    if (user.Role.Name == "Teacher")
+                        return 2;
+                }
             }
 
             return 0;

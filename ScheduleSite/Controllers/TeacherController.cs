@@ -91,7 +91,13 @@ namespace ScheduleSite.Controllers
         {
             models.GetDate = Convert.ToDateTime(date);
 
-            return View();
+            return View(new EventViewModel());
+        }
+
+        [HttpGet]
+        public IActionResult EventEdit(EventViewModel model)
+        {
+            return View("Event", model);
         }
 
         [HttpPost]
@@ -102,7 +108,7 @@ namespace ScheduleSite.Controllers
                 Name = model.Name,
                 Time = model.Time,
                 Date = models.GetDate,
-                Day = new DayDTO { PartyIdentifier = models.PartyIdentifier }
+                Day = new DayDTO { PartyIdentifier = models.Party.PartyIdentifier }
             };
 
             await _dateService.CreateEvent(dto);
@@ -119,6 +125,11 @@ namespace ScheduleSite.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(string id) => Json(id);
+        public async Task<IActionResult> Edit(string id)
+        {
+            EventViewModel m = Mapping.ToEventViewModel(await _dateService.GetEventById(id));
+
+            return RedirectToAction("EventEdit", new { date = DateTime.Now.ToString(), model = m });
+        }
     }
 }

@@ -6,6 +6,7 @@ using DatabaseAccessLayer.Entities.Parties;
 using DatabaseAccessLayer.Interfaces.UnitOfWork;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,27 @@ namespace BusinessLogicLayer.Services.Group
         private IUnitOfWork _unitOfWork;
 
         public PartyService(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
+
+        public IEnumerable<PartyDTO> GetAll() => _unitOfWork.Parties
+            .GetAll()
+            .Select(p => new PartyDTO
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Description = p.Description,
+                NameTeacher = p.NameTeacher,
+                PartyIdentifier = p.PartyIdentifier,
+                Students = p.Students.Select(s => new StudentDTO
+                {
+                    Id = s.Id,
+                    Amount = s.Amount,
+                    DateOfBirth = s.DateOfBirth,
+                    Email = s.Email,
+                    NormalizedUserName = s.NormalizedUserName,
+                    PhoneNumber = s.PhoneNumber,
+                    UserName = s.UserName,
+                })
+            });
 
         public async Task<PartyDTO?> GetById(string id)
         {
