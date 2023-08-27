@@ -57,5 +57,19 @@ namespace ScheduleSite.Controllers
 
             return View(models);
         }
+
+        
+        public async Task<IActionResult> AddParty(string id)
+        {
+            StudentDTO? dto = await _studentService.GetById(models.Student.Id);
+
+            if(dto is not null)
+            {
+                dto.PartyIdentifier = id;
+                await _partyService.Add(dto);
+            }
+
+            return RedirectToAction("Parties");
+        }
     }
 }

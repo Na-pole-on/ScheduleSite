@@ -1,12 +1,4 @@
-.home {
-    margin: 1.5rem 0;
-}
-
-.normal-font {
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.cal {
+﻿.cal {
     border: 0.1vw solid #E7E8EA;
     font-family: Roboto Mono;
 }
@@ -65,21 +57,4 @@
     text-decoration: none;
     font-size: 1rem;
     border: 0.1vw solid #E7E8EA;
-}
-
-.homelogo {
-    height: 3rem;
-}
-
-.avatar {
-    height: 2.25rem;
-}
-
-.party-text {
-    width: auto;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
 }
