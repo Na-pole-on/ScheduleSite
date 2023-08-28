@@ -35,7 +35,7 @@ namespace ScheduleSite.Controllers
             string? id = User.Claims.FirstOrDefault(c => c.Type == "Identifier").Value;
             models.Teacher = Mapping.ToTeacherViewModel(await _teacherService.GetById(id));
 
-            models.Month = Mapping.ToDayViewModel(_dateService.GetMonth(DateTime.Now, models.PartyIdentifier), 
+            models.Month = Mapping.ToDayViewModel(_dateService.GetMonth(Mapping.ToDateOnly(DateTime.Now), models.PartyIdentifier), 
                 DateTime.Now);
             models.GetDate = DateTime.Now;
 
@@ -45,7 +45,7 @@ namespace ScheduleSite.Controllers
         [HttpPost]
         public IActionResult Home(string date)
         {
-            models.Month = Mapping.ToDayViewModel(_dateService.GetMonth(Convert.ToDateTime(date), models.PartyIdentifier),
+            models.Month = Mapping.ToDayViewModel(_dateService.GetMonth(Mapping.ToDateOnly(date), models.PartyIdentifier),
                 Convert.ToDateTime(date));
             models.GetDate = Convert.ToDateTime(date);
 
@@ -106,8 +106,8 @@ namespace ScheduleSite.Controllers
             EventDTO dto = new EventDTO
             {
                 Name = model.Name,
-                Time = model.Time,
-                Date = models.GetDate,
+                Time = Mapping.ToTimeOnly(model.Time),
+                Date = new DateOnly(models.GetDate.Year, models.GetDate.Month, models.GetDate.Day),
                 Day = new DayDTO { PartyIdentifier = models.Party.PartyIdentifier }
             };
 

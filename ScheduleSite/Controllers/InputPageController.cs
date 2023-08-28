@@ -58,7 +58,7 @@ namespace ScheduleSite.Controllers
                 }
             }
 
-            return View(model);
+            return Json(model);
         }
 
         [HttpPost]

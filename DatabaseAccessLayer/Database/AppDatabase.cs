@@ -1,6 +1,8 @@
-﻿using DatabaseAccessLayer.Entities.Dates;
+﻿using DatabaseAccessLayer.Comparer;
+using DatabaseAccessLayer.Entities.Dates;
 using DatabaseAccessLayer.Entities.Parties;
 using DatabaseAccessLayer.Entities.Profiles;
+using DatabaseAccessLayer.Mapping;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseAccessLayer.Database
@@ -28,9 +30,6 @@ namespace DatabaseAccessLayer.Database
 
             if (this.Privileged.Count() == 0)
                 DefaultUser();
-
-            if (this.Parties.Count() == 0)
-                DefaultParty();
         }
 
         private void DefaultRoles()
@@ -52,24 +51,12 @@ namespace DatabaseAccessLayer.Database
                 NormalizedEmail = "juikomathew@gmail.com".ToUpper(),
                 PhoneNumber = "+375(29)393-17-60",
                 PhoneNumberConfirmed = true,
-                DateOfBirth = new DateTime(2002, 5, 30),
+                DateOfBirth = new DateOnly(2002, 5, 30),
                 Role = this.Roles.FirstOrDefault(r => r.Name == "Admin"),
                 LockoutEnabled = false
             };
 
             Privileged.Add(admin);
-            this.SaveChanges();
-        }
-        private void DefaultParty()
-        {
-            Party party = new Party
-            {
-                Name = "null",
-                Description = "null",
-                PartyIdentifier = "null"
-            };
-
-            Parties.Add(party);
             this.SaveChanges();
         }
 
@@ -92,12 +79,6 @@ namespace DatabaseAccessLayer.Database
                 .HasPrincipalKey(t => t.UserName)
                 .HasForeignKey(p => p.NameTeacher);
 
-            modelBuilder.Entity<Student>()
-                .HasMany(t => t.Parties)
-                .WithOne(p => p.Student)
-                .HasPrincipalKey(t => t.UserName)
-                .HasForeignKey(p => p.UserName);
-
             //Parties
             modelBuilder.Entity<Party>()
                 .HasMany(p => p.Days)
@@ -113,9 +94,25 @@ namespace DatabaseAccessLayer.Database
 
             modelBuilder.Entity<Party>()
                 .HasMany(p => p.Students)
-                .WithOne(s => s.Party)
-                .HasPrincipalKey(p => p.PartyIdentifier)
-                .HasForeignKey(s => s.PartyIdentifier);
+                .WithMany(s => s.Parties)
+                .UsingEntity<StudentParties>(
+                    s => s
+                        .HasOne(p => p.Student)
+                        .WithMany(sp => sp.StudentParties)
+                        .HasPrincipalKey(p => p.UserName)
+                        .HasForeignKey(sp => sp.StudentName),
+
+                    s => s
+                    .HasOne(p => p.Party)
+                    .WithMany(sp => sp.StudentParties)
+                    .HasPrincipalKey(p => p.PartyIdentifier)
+                    .HasForeignKey(sp => sp.PartyIdentifier),
+
+                    s =>
+                    {
+                        s.ToTable("StudentParties");
+                    }
+                );
 
             //Dates
             modelBuilder.Entity<Day>()
@@ -123,6 +120,18 @@ namespace DatabaseAccessLayer.Database
                 .WithOne(h => h.Day)
                 .HasPrincipalKey(d => d.Date)
                 .HasForeignKey(h => h.Date);
+        }
+
+        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+        {
+            base.ConfigureConventions(configurationBuilder);
+
+            configurationBuilder.Properties<DateOnly>()
+            .HaveConversion<DateOnlyToDate, DateOnlyComparer>()
+            .HaveColumnType("date");
+
+            configurationBuilder.Properties<TimeOnly>()
+                .HaveConversion<TimeOnlyToTime, TimeOnlyComparer>();
         }
     }
 }

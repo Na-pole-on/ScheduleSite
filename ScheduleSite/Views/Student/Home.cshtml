@@ -5,20 +5,27 @@
 
         <div class="col-md-10 mx-auto col-lg-4">
 
-            <form asp-action="PartyEntrance" class="row">
+            <form asp-action="ChooseParty" class="row">
 
-                
+                <div class="col-9">
+                    @Html.StudentPartyList(Model)
+                </div>
+
+                <div class="col-3">
+                    <button class="btn btn-primary px-3" type="submit" name="id">Save</button>
+                </div>
 
             </form>
 
             <div class="my-2">
-                @if (Model.Student.PartyIdentifier != "null")
+                @if (Model.Party is not null)
                 {
-                    <h2>@Model.Student.Party.Name</h2>
+                    <h2>@Model.Party.Name</h2>
 
-                    <div class="">
-                        @Model.Student.Party.Description
+                    <div class="info mb-3">
+                        @Model.Party.Description
                     </div>
+
                 }
                 else
                 {
@@ -103,7 +110,7 @@
                                     </div>
 
                                     <div class="modal-body">
-                                        @if (Model.Student.PartyIdentifier != "null")
+                                        @if (Model.Party is not null)
                                         {
                                             @if (day.Events.Count() > 0)
                                             {

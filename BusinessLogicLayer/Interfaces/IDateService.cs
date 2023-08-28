@@ -9,7 +9,7 @@ namespace BusinessLogicLayer.Interfaces
 {
     public interface IDateService
     {
-        IEnumerable<DayDTO> GetMonth(DateTime date, string partyId);
+        IEnumerable<DayDTO> GetMonth(DateOnly date, string partyId);
         Task<EventDTO> GetEventById(string  id);
         Task CreateEvent(EventDTO dto);
         Task DeleteEvent(string id);

@@ -16,7 +16,7 @@ namespace BusinessLogicLayer.Services.Date
 
         public DateService(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
-        public IEnumerable<DayDTO> GetMonth(DateTime date, string partyId) => _unitOfWork.Dates
+        public IEnumerable<DayDTO> GetMonth(DateOnly date, string partyId) => _unitOfWork.Dates
             .GetMonth(date, partyId)
             .Select(d => new DayDTO
             {

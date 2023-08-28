@@ -109,17 +109,16 @@ namespace BusinessLogicLayer.Services.Group
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task Add(StudentDTO dto)
+        public async Task Add(string studentId, string partyId)
         {
-            Student? student = await _unitOfWork.Students
-                .GetById(dto.Id);
+            Student? student = await _unitOfWork.Students.GetById(studentId);
+            Party? party = await _unitOfWork.Parties.GetById(partyId);
 
-            if(student is not null)
-            {
-                student.PartyIdentifier = dto.PartyIdentifier;
-                await _unitOfWork.Parties.Add(student);
-                await _unitOfWork.SaveAsync();
-            }
+            if (student is not null && party is not null)
+                if (!await _unitOfWork.Parties.NotEnter(studentId, partyId))
+                    _unitOfWork.Parties.Add(student, party);
+
+            await _unitOfWork.SaveAsync();
 
         }
 

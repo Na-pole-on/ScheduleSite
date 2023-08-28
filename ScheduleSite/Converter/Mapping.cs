@@ -1,6 +1,8 @@
 ﻿using BusinessLogicLayer.Dtos.Dates;
 using BusinessLogicLayer.Dtos.Parties;
 using BusinessLogicLayer.Dtos.Profiles;
+using DatabaseAccessLayer.Entities.Dates;
+using DatabaseAccessLayer.Entities.Profiles;
 using ScheduleSite.Models.Dates;
 using ScheduleSite.Models.InputPage;
 using ScheduleSite.Models.Parties;
@@ -16,7 +18,7 @@ namespace ScheduleSite.Converter
             {
                 Id = model.Id,
                 Email = model.Email,
-                DateOfBirth = model.DateOfBirth,
+                DateOfBirth = ToDateOnly(model.DateOfBirth.Value),
                 PasswordHash = model.Password,
                 PhoneNumber = model.PhoneNumber,
                 UserName = model.UserName
@@ -30,7 +32,7 @@ namespace ScheduleSite.Converter
             {
                 Id = model.Id,
                 Email = model.Email,
-                DateOfBirth = model.DateOfBirth,
+                DateOfBirth = ToDateOnly(model.DateOfBirth.Value),
                 PasswordHash = model.Password,
                 PhoneNumber = model.PhoneNumber,
                 UserName = model.UserName
@@ -44,9 +46,7 @@ namespace ScheduleSite.Converter
                 UserName = dto.UserName,
                 Email = dto.Email,
                 PhoneNumber = dto.PhoneNumber,
-                DateOfBirth = new DateTime(dto.DateOfBirth.Value.Year,
-                dto.DateOfBirth.Value.Month,
-                dto.DateOfBirth.Value.Day),
+                DateOfBirth = dto.DateOfBirth,
                 UserRole = new RoleViewModel { Name = dto.Role.Name },
                 Parties = dto.Parties.Select(p => new PartyViewModel
                 {
@@ -103,7 +103,7 @@ namespace ScheduleSite.Converter
             return dtos.Select(d => new DayViewModel
             {
                 Id = d.Id,
-                Date = new DateTime(d.Date.Year, d.Date.Month, d.Date.Day),
+                Date = DateTime.Parse(d.Date.ToString()),
                 IsToday = (d.Date.Day == DateTime.Now.Day && d.Date.Month == DateTime.Now.Month && d.Date.Year == DateTime.Now.Year) ? true : false,
                 IsThisMonth = (d.Date.Month == date.Month && d.Date.Year == date.Year) ? true : false,
                 Events = (d.Events is not null)
@@ -112,7 +112,7 @@ namespace ScheduleSite.Converter
                     Id = h.Id,
                     Name = h.Name,
                     Result = h.Result,
-                    Time = new DateTime(d.Date.Year, d.Date.Month, d.Date.Day, h.Time.Hour, h.Time.Minute, 0)
+                    Time = DateTime.Parse(h.Time.ToString())
                 }).ToList()
                 : new List<EventViewModel>()
             }).ToList();
@@ -123,7 +123,7 @@ namespace ScheduleSite.Converter
             {
                 Id = dto.Id,
                 Name = dto.Name,
-                Time = dto.Time
+                Time = DateTime.Parse(dto.Time.ToString())
             };
         }
         public static StudentViewModel ToStudentViewModel(StudentDTO entity)
@@ -134,12 +134,34 @@ namespace ScheduleSite.Converter
                 UserName = entity.UserName,
                 Email = entity.Email,
                 PhoneNumber = entity.PhoneNumber,
-                DateOfBirth = new DateTime(entity.DateOfBirth.Value.Year,
-                entity.DateOfBirth.Value.Month,
-                entity.DateOfBirth.Value.Day),
+                DateOfBirth = entity.DateOfBirth,
                 PartyIdentifier = entity.PartyIdentifier,
-                UserRole = new RoleViewModel { Name = entity.Role.Name }
+                UserRole = new RoleViewModel { Name = entity.Role.Name },
+                Parties = (entity.Parties is not null)
+                    ? entity.Parties.Select(p => new PartyViewModel
+                    {
+                        Id = p.Id,
+                        Description = p.Description,
+                        Name = p.Name,
+                        PartyIdentifier = p.PartyIdentifier
+                    }).ToList()
+                    : new List<PartyViewModel>()
             };
+        }
+
+        public static DateOnly ToDateOnly(DateTime date)
+        {
+            return new DateOnly(date.Year, date.Month, date.Day);
+        }
+        public static DateOnly ToDateOnly(string dateStr)
+        {
+            DateTime date = Convert.ToDateTime(dateStr);
+
+            return new DateOnly(date.Year, date.Month, date.Day);
+        }
+        public static TimeOnly ToTimeOnly(DateTime time)
+        {
+            return new TimeOnly(time.Hour, time.Minute, time.Second);
         }
     }
 }

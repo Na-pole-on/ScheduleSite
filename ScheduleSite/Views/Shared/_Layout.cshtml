@@ -14,13 +14,11 @@
 
 </head>
 <body>
-    
-    @{
-        string role = User.Claims.FirstOrDefault(c => c.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
-    }
 
     @if (User.Identity.IsAuthenticated)
     {
+        string role = User.Claims.FirstOrDefault(c => c.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
+
         <header class="p-3 mb-3 border-bottom" id="header" style="display: block;">
             <div class="container">
                 <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">

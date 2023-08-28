@@ -13,13 +13,10 @@ namespace DatabaseAccessLayer.Entities.Dates
         public string? Id { get; set; } = Guid.NewGuid().ToString();
         public string? Name { get; set; }
         public int Result { get; set; }
-        [DataType(DataType.Time)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:mm}")]
-        public DateTime Time { get; set; }
+        public TimeOnly Time { get; set; }
 
 
         public Day? Day { get; set; }
-        [Column(TypeName = "date")]
-        public DateTime Date { get; set; }
+        public DateOnly Date { get; set; }
     }
 }

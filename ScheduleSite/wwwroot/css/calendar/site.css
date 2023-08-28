@@ -22,3 +22,9 @@
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
 }
+
+.scroll {
+    width: auto;
+    max-height: 15rem;
+    overflow-y: auto;
+}

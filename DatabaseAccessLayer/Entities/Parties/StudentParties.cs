@@ -9,10 +9,10 @@ namespace DatabaseAccessLayer.Entities.Parties
 {
     public class StudentParties
     {
-        public string? Id { get; set; }
+        public string? Id { get; set; } = Guid.NewGuid().ToString();
 
         public Student? Student { get; set; }
-        public string? UserName { get; set; }
+        public string? StudentName { get; set; }
 
         public Party? Party { get; set; }
         public string? PartyIdentifier { get; set; }

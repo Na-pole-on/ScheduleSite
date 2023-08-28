@@ -16,21 +16,21 @@ namespace DatabaseAccessLayer.Implementation.Factories
 
         public override IEnumerable<Student>? GetAll() => db.Students
             .Include(s => s.Role)
-            .Include(s => s.Party);
+            .Include(s => s.Parties);
 
         public override async Task<Student?> GetById(string id) => await db.Students
             .Include(s => s.Role)
-            .Include(s => s.Party)
+            .Include(s => s.Parties)
             .FirstAsync(s => s.Id == id);
 
         public override async Task<Student?> GetByName(string name) => await db.Students
             .Include(s => s.Role)
-            .Include(s => s.Party)
+            .Include(s => s.Parties)
             .FirstAsync(s => s.NormalizedUserName == name);
 
         public override async Task<Student?> GetByEmail(string email) => await db.Students
             .Include(s => s.Role)
-            .Include(s => s.Party)
+            .Include(s => s.Parties)
             .FirstAsync(s => s.NormalizedEmail == email);
 
         public override async Task Create(Student entity) => await db.Students

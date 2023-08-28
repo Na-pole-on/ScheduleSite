@@ -30,8 +30,9 @@ namespace ScheduleSite.Controllers
         {
             string? id = User.Claims.FirstOrDefault(c => c.Type == "Identifier").Value;
             models.Student = Mapping.ToStudentViewModel(await _studentService.GetById(id));
+            models.Parties = models.Student.Parties;
 
-            models.Month = Mapping.ToDayViewModel(_dateService.GetMonth(DateTime.Now, models.PartyIdentifier),
+            models.Month = Mapping.ToDayViewModel(_dateService.GetMonth(Mapping.ToDateOnly(DateTime.Now), models.PartyIdentifier),
                 DateTime.Now);
             models.GetDate = DateTime.Now;
 
@@ -41,7 +42,7 @@ namespace ScheduleSite.Controllers
         [HttpPost]
         public IActionResult Home(string date)
         {
-            models.Month = Mapping.ToDayViewModel(_dateService.GetMonth(Convert.ToDateTime(date), models.PartyIdentifier),
+            models.Month = Mapping.ToDayViewModel(_dateService.GetMonth(Mapping.ToDateOnly(date), models.PartyIdentifier),
                 Convert.ToDateTime(date));
             models.GetDate = Convert.ToDateTime(date);
 
@@ -58,16 +59,21 @@ namespace ScheduleSite.Controllers
             return View(models);
         }
 
-        
+        [HttpPost]
+        public async Task<IActionResult> ChooseParty(string id)
+        {
+            if (id != "0")
+            {
+                models.Party = Mapping.ToPartyViewModel(await _partyService.GetById(id));
+                models.PartyIdentifier = models.Party.PartyIdentifier;
+            }
+
+            return Redirect("/Student/Home");
+        }
+
         public async Task<IActionResult> AddParty(string id)
         {
-            StudentDTO? dto = await _studentService.GetById(models.Student.Id);
-
-            if(dto is not null)
-            {
-                dto.PartyIdentifier = id;
-                await _partyService.Add(dto);
-            }
+            await _partyService.Add(models.Student.Id, id);
 
             return RedirectToAction("Parties");
         }

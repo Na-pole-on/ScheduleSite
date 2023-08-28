@@ -14,6 +14,6 @@ namespace BusinessLogicLayer.Dtos.Profiles
         public PartyDTO? Party { get; set; }
         public string? PartyIdentifier { get; set; }
 
-        public IEnumerable<StudentPartiesDTO>? Parties { get; set; }
+        public IEnumerable<PartyDTO>? Parties { get; set; }
     }
 }

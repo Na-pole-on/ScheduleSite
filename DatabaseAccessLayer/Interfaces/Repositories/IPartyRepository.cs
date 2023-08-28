@@ -13,8 +13,9 @@ namespace DatabaseAccessLayer.Interfaces.Repositories
         IEnumerable<Party> GetAll();
         Task<Party?> GetById(string id);
         Task<Party?> GetByPartyId(string partyId);
-        Task Add(Student entity);
-        Task Remove(Student entity);
+        Task<bool> NotEnter(string studentId, string partyId);
+        void Add(Student student, Party party);
+        void Remove(Student student, Party party);
         Task Create(Party entity);
     }
 }

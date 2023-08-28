@@ -17,8 +17,7 @@ namespace DatabaseAccessLayer.Entities.Profiles
         public string? NormalizedEmail { get; set; }
         public string? PhoneNumber { get; set; }
         public bool PhoneNumberConfirmed { get; set; }
-        [Column(TypeName = "date")]
-        public DateTime? DateOfBirth { get; set; }
+        public DateOnly? DateOfBirth { get; set; }
         public string? PasswordHash { get; set; }
         public bool LockoutEnabled { get; set; }
 

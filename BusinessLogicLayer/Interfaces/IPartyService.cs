@@ -15,7 +15,7 @@ namespace BusinessLogicLayer.Interfaces
         IEnumerable<PartyDTO> GetAll();
         Task<PartyDTO?> GetById(string id);
         Task<PartyDTO?> GetByPartyId(string partyId);
-        Task Add(StudentDTO entity);
+        Task Add(string studentId, string partyId);
         Task Remove(StudentDTO entity);
         Task Create(PartyDTO entity);
     }

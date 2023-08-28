@@ -8,5 +8,7 @@ namespace ScheduleSite.Models.Profiles
 
         public PartyViewModel? Party { get; set; }
         public string? PartyIdentifier { get; set; }
+
+        public List<PartyViewModel>? Parties { get; set; }
     }
 }

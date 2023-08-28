@@ -18,10 +18,10 @@ namespace DatabaseAccessLayer.Implementation.Repositories
 
         public DateRepository(AppDatabase db) => this.db = db;
 
-        public IEnumerable<Day> GetMonth(DateTime date, string partyId)
+        public IEnumerable<Day> GetMonth(DateOnly date, string partyId)
         {
-            DateTime startOfCalendar = date.AddDays(-date.Day);
-            DateTime startOfMonth = startOfCalendar.AddDays(-(int)startOfCalendar.DayOfWeek);
+            DateOnly startOfCalendar = date.AddDays(-date.Day);
+            DateOnly startOfMonth = startOfCalendar.AddDays(-(int)startOfCalendar.DayOfWeek);
 
             days.Clear();
 
@@ -36,7 +36,7 @@ namespace DatabaseAccessLayer.Implementation.Repositories
                 {
                     Day? d = db.Days
                         .Include(d => d.Events)
-                        .FirstOrDefault(d => d.Date.Date == startOfMonth.Date && d.PartyIdentifier == partyId);
+                        .FirstOrDefault(d => d.Date == startOfMonth && d.PartyIdentifier == partyId);
 
                     if (d is not null)
                         day.Events = d.Events;
@@ -51,9 +51,9 @@ namespace DatabaseAccessLayer.Implementation.Repositories
             return days;
         }
 
-        public async Task<Day?> GetDayByDate(DateTime date) => await db.Days
+        public async Task<Day?> GetDayByDate(DateOnly date) => await db.Days
             .Include(d => d.Events)
-            .FirstOrDefaultAsync(d => d.Date.Date == date.Date);
+            .FirstOrDefaultAsync(d => d.Date == date);
 
         public async Task<Event?> GetEventById(string id) => await db.Events
             .FirstOrDefaultAsync(e => e.Id == id);
