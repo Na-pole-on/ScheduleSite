@@ -9,6 +9,6 @@ namespace DatabaseAccessLayer.Entities.Profiles
 {
     public class Teacher: User
     {
-        public IEnumerable<Party>? Parties { get; set; }
+        public List<Party>? Parties { get; set; }
     }
 }

@@ -7,6 +7,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddBLLayer(builder.Configuration,
     builder.Configuration.GetConnectionString("Default"));
+builder.Services.AddApplicationInsightsTelemetry();
 
 var app = builder.Build();
 
@@ -14,7 +15,6 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -28,6 +28,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Student}/{action=Parties}/{id?}");
+    pattern: "{controller=Student}/{action=Home}/{id?}");
 
 app.Run();

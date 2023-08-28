@@ -12,6 +12,6 @@ namespace DatabaseAccessLayer.Entities.Profiles
         public string? Name { get; set; }
         public string? NormalizedName { get; set; }
 
-        public IEnumerable<User>? Users { get; set; }
+        public List<User>? Users { get; set; }
     }
 }

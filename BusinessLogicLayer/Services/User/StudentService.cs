@@ -42,15 +42,16 @@ namespace BusinessLogicLayer.Services.UserServices
                         Name = student.Role.Name,
                         NormalizedName = student.Role.NormalizedName,
                     },
-                    Party = new PartyDTO
-                    {
-                        Id = student.Party.Id,
-                        Description = student.Party.Description,
-                        Name = student.Party.Name,
-                        NameTeacher = student.Party.NameTeacher,
-                        PartyIdentifier = student.Party.PartyIdentifier
-                    },
-                    PartyIdentifier = student.PartyIdentifier
+                    Parties = (student.Parties is not null)
+                        ? student.Parties.Select(p => new PartyDTO
+                        {
+                            Id = p.Id,
+                            Description = p.Description,
+                            Name = p.Name,
+                            PartyIdentifier = p.PartyIdentifier,
+                            NameTeacher = p.NameTeacher,
+                        })
+                        : null
                 };
 
             return null;
@@ -80,15 +81,16 @@ namespace BusinessLogicLayer.Services.UserServices
                         Name = student.Role.Name,
                         NormalizedName = student.Role.NormalizedName,
                     },
-                    Party = new PartyDTO
+                    Parties = (student.Parties is not null)
+                    ? student.Parties.Select(p => new PartyDTO
                     {
-                        Id = student.Party.Id,
-                        Description = student.Party.Description,
-                        Name = student.Party.Name,
-                        NameTeacher = student.Party.NameTeacher,
-                        PartyIdentifier = student.Party.PartyIdentifier
-                    },
-                    PartyIdentifier = student.PartyIdentifier
+                        Id = p.Id,
+                        Description = p.Description,
+                        Name = p.Name,
+                        PartyIdentifier = p.PartyIdentifier,
+                        NameTeacher = p.NameTeacher,
+                    })
+                    : null
                 };
 
             return null;
@@ -118,15 +120,16 @@ namespace BusinessLogicLayer.Services.UserServices
                         Name = student.Role.Name,
                         NormalizedName = student.Role.NormalizedName,
                     },
-                    Party = new PartyDTO
+                    Parties = (student.Parties is not null)
+                    ? student.Parties.Select(p => new PartyDTO
                     {
-                        Id = student.Party.Id,
-                        Description = student.Party.Description,
-                        Name = student.Party.Name,
-                        NameTeacher = student.Party.NameTeacher,
-                        PartyIdentifier = student.Party.PartyIdentifier
-                    },
-                    PartyIdentifier = student.PartyIdentifier
+                        Id = p.Id,
+                        Description = p.Description,
+                        Name = p.Name,
+                        PartyIdentifier = p.PartyIdentifier,
+                        NameTeacher = p.NameTeacher,
+                    })
+                    : null
                 };
 
             return null;
@@ -144,8 +147,7 @@ namespace BusinessLogicLayer.Services.UserServices
                 PasswordHash = Cipher.Encrypt(entity.PasswordHash),
                 PhoneNumber = entity.PhoneNumber,
                 Amount = entity.Amount,
-                Role = await _unitOfWork.Roles.GetByName("Student"),
-                Party = await _unitOfWork.Parties.GetByPartyId("null")
+                Role = await _unitOfWork.Roles.GetByName("Student")
             };
 
             await _unitOfWork.Students.Create(student);

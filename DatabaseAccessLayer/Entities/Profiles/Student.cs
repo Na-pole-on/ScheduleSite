@@ -11,9 +11,7 @@ namespace DatabaseAccessLayer.Entities.Profiles
     {
         public decimal Amount { get; set; }
 
-        public Party? Party { get; set; }
-        public string? PartyIdentifier { get; set; }
-
-        public IEnumerable<StudentParties>? Parties { get; set; }
+        public List<Party>? Parties { get; set; }
+        public List<StudentParties>? StudentParties { get; set; }
     }
 }

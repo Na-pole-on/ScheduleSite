@@ -34,21 +34,23 @@ namespace DatabaseAccessLayer.Implementation.Repositories
             .Include(p => p.Days)
             .FirstOrDefaultAsync(p => p.PartyIdentifier == partyId);
 
-        public async Task Add(Student entity)
+        public async Task<bool> NotEnter(string studentId, string partyId)
         {
-            Party? party = await GetByPartyId(entity.PartyIdentifier);
+            Party? party = await db.Parties
+                .FirstOrDefaultAsync(p => p.Id == partyId);
 
             if (party is not null)
-                entity.Party = party;
+                if (party.Students is not null)
+                    return party.Students.Any(s => s.Id == studentId);
+
+            return false;
         }
 
-        public async Task Remove(Student entity)
-        {
-            Party? party = await GetByPartyId("null");
+        public void Add(Student entity, Party party) => party.Students
+            .Add(entity);
 
-            if (party is not null)
-                entity.Party = party;
-        }
+        public void Remove(Student entity, Party party) => party.Students
+            .Remove(entity);
 
         public async Task Create(Party entity) => await db.Parties.AddAsync(entity);
     }

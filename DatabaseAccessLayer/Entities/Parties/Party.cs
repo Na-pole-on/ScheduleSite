@@ -18,8 +18,8 @@ namespace DatabaseAccessLayer.Entities.Parties
         public Teacher? Teacher { get; set; }
         public string? NameTeacher { get; set; }
 
-        public IEnumerable<StudentParties>? StudentParties { get; set; }
-        public IEnumerable<Student>? Students { get; set; }
-        public IEnumerable<Day>? Days { get; set; }
+        public List<Student>? Students { get; set; }
+        public List<StudentParties>? StudentParties { get; set; }
+        public List<Day>? Days { get; set; }
     }
 }

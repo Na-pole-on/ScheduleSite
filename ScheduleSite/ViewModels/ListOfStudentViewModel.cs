@@ -12,7 +12,6 @@ namespace ScheduleSite.ViewModels
 
         public PartyViewModel? Party { get; set; }
         public List<PartyViewModel>? Parties { get; set; }
-        public List<StudentPartiesViewModel>? StudentParties { get; set; }
         public string PartyIdentifier { get; set; } = "null";
     }
 }
